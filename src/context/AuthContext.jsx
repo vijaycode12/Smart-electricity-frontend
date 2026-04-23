@@ -3,44 +3,42 @@ import { api } from '../api'
 
 // ── AuthContext ──────────────────────────────────────────────────
 // This context stores who is currently logged in.
+// Auth is now fully cookie-based — no localStorage involved.
+// The cookie is set by the backend on login and sent automatically
+// with every request via credentials: 'include' in the API helper.
+//
 // Any component in the app can call useAuth() to get:
 //   user    - the logged-in user object (or null if not logged in)
 //   login   - function to log the user in
 //   logout  - function to log the user out
-//   checked - true once we've verified the saved token (prevents flash)
+//   checked - true once we've verified the session on first load
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser]       = useState(null)   // logged-in user or null
-  const [checked, setChecked] = useState(false)  // have we checked localStorage yet?
+  const [checked, setChecked] = useState(false)  // have we verified the session yet?
 
-  // On first load, check if a token was saved from a previous session
+  // On first load, ask the server if the cookie is still valid.
+  // No localStorage check needed — the browser sends the cookie automatically.
   useEffect(() => {
-    const savedToken = localStorage.getItem('token')
-    if (savedToken) {
-      // Token exists — verify it's still valid with the server
-      api.get('api/v1/auth/me', {})
-        .then(res => { if (res.success) setUser(res.user) })
-        .finally(() => setChecked(true))
-    } else {
-      // No token saved — user is not logged in
-      setChecked(true)
-    }
+    api.get('api/v1/auth/me')
+      .then(res => { if (res.success) setUser(res.user) })
+      .finally(() => setChecked(true))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Called when user successfully logs in or signs up
-  const login = (userData, token) => {
-    localStorage.setItem('token', token) // save token so they stay logged in
+  // Called after successful login or signup.
+  // Token is in the cookie set by the backend — we just store the user object.
+  const login = (userData) => {
     setUser(userData)
   }
 
-  // Called when user clicks logout
+  // Called when user clicks logout.
+  // Backend clears the cookie, we clear the user from state.
   const logout = async () => {
     await api.post('api/v1/auth/sign-out', {})
-    localStorage.removeItem('token') // remove saved token
     setUser(null)
   }
 

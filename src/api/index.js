@@ -6,14 +6,14 @@
 const BASE_URL = 'https://watttrack-backend.onrender.com/'
 
 // Get the saved auth token from localStorage
-const getToken = () => localStorage.getItem('token')
+//const getToken = () => localStorage.getItem('token')
 
 // Build headers for authenticated requests
-const buildHeaders = () => ({
-  'Content-Type': 'application/json',
-  // Only add Authorization header if a token exists
-  ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
-})
+// const buildHeaders = () => ({
+//   'Content-Type': 'application/json',
+//   // Only add Authorization header if a token exists
+//   ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
+// })
 
 // ── Core request function ────────────────────────────────────────
 // Used internally by api.get, api.post, etc.
@@ -22,7 +22,7 @@ const request = async (url, options = {}) => {
     const response = await fetch(`${BASE_URL}${url}`, {
       ...options,
       credentials: 'include',
-      headers: options.headers || buildHeaders(),
+      headers: { 'Content-Type': 'application/json' },
     })
 
     // If the server returned an error status (4xx, 5xx)
