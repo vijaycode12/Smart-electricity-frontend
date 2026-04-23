@@ -17,12 +17,12 @@ const AnalyticsPage = () => {
     const load = async () => {
       try {
         const [monthly, breakdown, pred, sug, alerts, eff] = await Promise.all([
-          api.get('/analytics/analytics/monthly-usage'),
-          api.get('/analytics/analytics/app-breakdown'),
-          api.get('/analytics/analytics/predictions'),
-          api.get('/analytics/analytics/suggestions'),
-          api.get('/analytics/analytics/alerts'),
-          api.get('/analytics/analytics/eff-score'),
+          api.get('api/v1/analytics/analytics/monthly-usage'),
+          api.get('api/v1/analytics/analytics/app-breakdown'),
+          api.get('api/v1/analytics/analytics/predictions'),
+          api.get('api/v1/analytics/analytics/suggestions'),
+          api.get('api/v1/analytics/analytics/alerts'),
+          api.get('api/v1/analytics/analytics/eff-score'),
         ])
         setData({
           monthly:   monthly.data   || [],

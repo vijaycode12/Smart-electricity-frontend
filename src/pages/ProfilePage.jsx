@@ -44,10 +44,10 @@ const ProfilePage = () => {
       setLoadingStats(true)
       try {
         const [bills, appliances, eff, monthly] = await Promise.all([
-          api.get('/bill/bills'),
-          api.get('/appliance/appliances'),
-          api.get('/analytics/analytics/eff-score'),
-          api.get('/analytics/analytics/monthly-usage'),
+          api.get('api/v1/bill/bills'),
+          api.get('api/v1/appliance/appliances'),
+          api.get('api/v1/analytics/analytics/eff-score'),
+          api.get('api/v1/analytics/analytics/monthly-usage'),
         ])
         const bd = bills.data || [], ad = appliances.data || [], md = monthly.data || []
         const totalSpend = bd.reduce((s, b) => s + (b.totalAmount || 0), 0)

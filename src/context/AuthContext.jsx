@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     const savedToken = localStorage.getItem('token')
     if (savedToken) {
       // Token exists — verify it's still valid with the server
-      api.get('/auth/me', {})
+      api.get('api/v1/auth/me', {})
         .then(res => { if (res.success) setUser(res.user) })
         .finally(() => setChecked(true))
     } else {
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   // Called when user clicks logout
   const logout = async () => {
-    await api.post('/auth/sign-out', {})
+    await api.post('api/v1/auth/sign-out', {})
     localStorage.removeItem('token') // remove saved token
     setUser(null)
   }

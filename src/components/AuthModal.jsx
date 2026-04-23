@@ -24,8 +24,8 @@ const AuthModal = ({ mode, onModeChange, onClose }) => {
     setLoading(true)
     try {
       const res = mode === 'login'
-        ? await api.post('/auth/log-in',  { email: form.email, password: form.password })
-        : await api.post('/auth/sign-up', form)
+        ? await api.post('api/v1/auth/log-in',  { email: form.email, password: form.password })
+        : await api.post('api/v1/auth/sign-up', form)
       if (res.success) {
         login(res.data.user, res.data.token)
         toast(mode === 'login' ? 'Welcome back!' : 'Account created!')

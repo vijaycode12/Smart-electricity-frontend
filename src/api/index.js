@@ -3,7 +3,7 @@
 // It handles: auth headers, error parsing, and JSON responses.
 
 // Base URL for all API calls — change this to your backend address
-const BASE_URL = 'https://watttrack-backend.onrender.com'
+const BASE_URL = 'https://watttrack-backend.onrender.com/'
 
 // Get the saved auth token from localStorage
 const getToken = () => localStorage.getItem('token')

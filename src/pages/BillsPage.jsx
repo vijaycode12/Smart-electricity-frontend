@@ -36,7 +36,7 @@ const BillsPage = () => {
 
   const loadBills = async () => {
     setLoading(true)
-    const res = await api.get('/bill/bills')
+    const res = await api.get('api/v1/bill/bills')
     if (res.success) setBills(res.data || [])
     setLoading(false)
   }
@@ -47,7 +47,7 @@ const BillsPage = () => {
   const handleAdd = async () => {
     if (!form.totalUnits) return toast('Total units is required', 'error')
     setSaving(true)
-    const res = await api.post('/bill/bills', form)
+    const res = await api.post('api/v1/bill/bills', form)
     if (res.success) { toast('Bill added!'); setShowAdd(false); setForm(EMPTY_FORM); loadBills() }
     else toast(res.message || 'Failed to add bill', 'error')
     setSaving(false)
@@ -59,7 +59,7 @@ const BillsPage = () => {
     setUploading(true)
     const fd = new FormData()
     fd.append('bill', file)
-    const res = await api.upload('/bill/upload', fd)
+    const res = await api.upload('api/v1/bill/upload', fd)
     if (res.success) { toast('Bill extracted and saved!'); setShowUpload(false); setPickedFile(''); loadBills() }
     else toast(res.message || 'Extraction failed — try a clearer image', 'error')
     setUploading(false)
@@ -67,7 +67,7 @@ const BillsPage = () => {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete this bill?')) return
-    const res = await api.delete(`/bill/bills/${id}`)
+    const res = await api.delete(`api/v1/bill/bills/${id}`)
     if (res.message) { toast('Bill deleted'); loadBills() }
     else toast('Failed to delete', 'error')
   }

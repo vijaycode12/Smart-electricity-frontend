@@ -18,12 +18,12 @@ const Dashboard = () => {
       try {
         // Fetch all 6 endpoints in parallel for speed
         const [bills, monthly, pred, eff, alerts, suggestions] = await Promise.all([
-          api.get('/bill/bills'),
-          api.get('/analytics/analytics/monthly-usage'),
-          api.get('/analytics/analytics/predictions'),
-          api.get('/analytics/analytics/eff-score'),
-          api.get('/analytics/analytics/alerts'),
-          api.get('/analytics/analytics/suggestions'),
+          api.get('api/v1/bill/bills'),
+          api.get('api/v1/analytics/analytics/monthly-usage'),
+          api.get('api/v1/analytics/analytics/predictions'),
+          api.get('api/v1/analytics/analytics/eff-score'),
+          api.get('api/v1/analytics/analytics/alerts'),
+          api.get('api/v1/analytics/analytics/suggestions'),
         ])
         setData({
           bills:       bills.data   || [],

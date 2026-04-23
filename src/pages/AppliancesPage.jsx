@@ -240,7 +240,7 @@ const AppliancesPage = () => {
   const load = async () => {
     setLoading(true)
     try {
-      const res = await api.get('/appliance/appliances')
+      const res = await api.get('api/v1/appliance/appliances')
       setAppliances(res.success ? (res.data || []) : [])
     } catch { toast('Failed to load appliances', 'error'); setAppliances([]) }
     setLoading(false)
@@ -277,7 +277,7 @@ const AppliancesPage = () => {
       if (!editForm.name || !editForm.voltage || !editForm.hoursPerDay) return toast('Name, power and hours are required', 'error')
       setSaving(true)
       try {
-        const res = await api.put(`/appliance/appliances/${editItem._id}`, editForm)
+        const res = await api.put(`api/v1/appliance/appliances/${editItem._id}`, editForm)
         if (res.success) { toast('Appliance updated!'); closeModal(); await load() } else showError(res)
       } catch { toast('Network error', 'error') }
       setSaving(false); return
@@ -286,7 +286,7 @@ const AppliancesPage = () => {
       if (!name || !single.voltage || !single.hoursPerDay) return toast('Name, power and hours are required', 'error')
       setSaving(true)
       try {
-        const res = await api.post('/appliance/appliances', { name, voltage: single.voltage, hoursPerDay: single.hoursPerDay, days: single.days || undefined })
+        const res = await api.post('api/v1/appliance/appliances', { name, voltage: single.voltage, hoursPerDay: single.hoursPerDay, days: single.days || undefined })
         if (res.success) { toast(res.daysSource === 'bill' ? 'Added! Days auto-filled from latest bill.' : 'Appliance added!'); closeModal(); await load() } else showError(res)
       } catch { toast('Network error', 'error') }
       setSaving(false); return
@@ -307,7 +307,7 @@ const AppliancesPage = () => {
     if (!confirm('Delete this appliance?')) return
     setDeletingId(id)
     try {
-      const res = await api.delete(`/appliance/appliances/${id}`)
+      const res = await api.delete(`api/v1/appliance/appliances/${id}`)
       if (res.success || res.message) { setAppliances(prev => prev.filter(a => a._id !== id)); toast('Appliance deleted!') }
       else toast(res.message || 'Failed to delete', 'error')
     } catch (err) { toast('Network error: ' + err.message, 'error') }
