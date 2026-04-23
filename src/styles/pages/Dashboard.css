@@ -1,0 +1,219 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.dashboard__title {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: Georgia, serif;
+}
+
+.dashboard__subtitle {
+  color: var(--text2);
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.dashboard__date {
+  font-size: 13px;
+  color: var(--text3);
+}
+
+/* Alert banner */
+.dashboard__alert {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.dashboard__alert-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dashboard__alert-item {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* Stat cards */
+.dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Chart + tips row */
+.dashboard__middle {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 12px;
+}
+
+.dashboard__chart-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 22px;
+}
+
+.dashboard__chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard__chart-label { font-size: 14px; font-weight: 600; }
+.dashboard__chart-unit  { font-size: 12px; color: var(--text3); }
+
+.dashboard__chart-empty {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  font-size: 13px;
+}
+
+.dashboard__chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 180px;
+}
+
+.dashboard__chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dashboard__chart-val   { font-size: 10px; color: var(--text3); }
+.dashboard__chart-month { font-size: 10px; color: var(--text3); }
+
+.dashboard__chart-bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.5s ease;
+  border: none;
+}
+
+/* Active bar uses the chart accent — same blue in both themes */
+.dashboard__chart-bar--active   { background: var(--chart-active); }
+.dashboard__chart-bar--inactive { background: var(--chart-inactive); }
+
+/* Tips card */
+.dashboard__tips-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard__tips-title  { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.dashboard__tips-empty  { color: var(--text3); font-size: 13px; }
+
+.dashboard__tip {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 12px;
+  background: var(--bg3);
+  border-radius: 7px;
+  border: 1px solid var(--border);
+}
+
+.dashboard__tip-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+/* Gauge + bills row */
+.dashboard__bottom {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 12px;
+}
+
+.dashboard__gauge-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard__gauge-title { font-size: 13px; font-weight: 600; }
+
+/* Score number — plain body font, not serif/mono */
+.dashboard__gauge-score {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: -18px;
+}
+
+.dashboard__gauge-label { font-size: 12px; color: var(--text3); }
+
+.dashboard__bills-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 22px;
+}
+
+.dashboard__bills-title { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+.dashboard__bills-empty { color: var(--text3); font-size: 13px; }
+
+.dashboard__bills-list { display: flex; flex-direction: column; gap: 8px; }
+
+.dashboard__bill-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  gap: 14px;
+}
+
+.dashboard__bill-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashboard__bill-info   { flex: 1; }
+.dashboard__bill-date   { font-size: 13px; font-weight: 500; }
+.dashboard__bill-days   { font-size: 12px; color: var(--text3); }
+.dashboard__bill-amounts{ text-align: right; }
+
+/* Numbers — plain body font */
+.dashboard__bill-kwh  { font-size: 14px; font-weight: 600; font-family: var(--font-body); }
+.dashboard__bill-price{ font-size: 12px; color: var(--text3); }

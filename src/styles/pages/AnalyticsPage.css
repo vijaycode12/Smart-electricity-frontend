@@ -1,0 +1,172 @@
+.analytics {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.analytics__title    { font-size: 24px; font-weight: 700; font-family: Georgia, serif; }
+.analytics__subtitle { color: var(--text2); font-size: 14px; margin-top: 3px; }
+
+.analytics__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.analytics__charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.analytics__card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 22px;
+}
+
+.analytics__card-title { font-size: 14px; font-weight: 600; margin-bottom: 18px; }
+.analytics__card-empty {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+/* Monthly horizontal bars */
+.analytics__trend-rows { display: flex; flex-direction: column; gap: 12px; }
+
+.analytics__trend-row  { display: flex; align-items: center; gap: 12px; }
+.analytics__trend-month { width: 55px; font-size: 12px; color: var(--text3); flex-shrink: 0; }
+
+.analytics__trend-bar-track {
+  flex: 1;
+  height: 22px;
+  background: var(--bg4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.analytics__trend-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 7px;
+  min-width: 32px;
+  transition: width 0.5s ease;
+}
+
+/* Both latest and old bars use the chart color — just different shades */
+.analytics__trend-bar-fill--latest  { background: var(--chart-active); }
+.analytics__trend-bar-fill--old     { background: var(--chart-inactive); }
+
+.analytics__trend-bar-text          { font-size: 11px; font-weight: 600; }
+.analytics__trend-bar-text--latest  { color: #fff; }
+.analytics__trend-bar-text--old     { color: var(--text3); }
+
+.analytics__trend-amount { width: 60px; font-size: 12px; color: var(--text2); text-align: right; flex-shrink: 0; }
+
+/* Breakdown bars */
+.analytics__breakdown-rows { display: flex; flex-direction: column; gap: 14px; }
+
+.analytics__breakdown-row-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.analytics__breakdown-name  { color: var(--text); font-weight: 500; }
+.analytics__breakdown-stats { color: var(--text2); }
+
+.analytics__breakdown-bar-track {
+  height: 5px;
+  background: var(--bg4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.analytics__breakdown-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+  /* color set inline per item — alternates between active and a lighter shade */
+}
+
+/* Alerts + Tips */
+.analytics__bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.analytics__alerts { display: flex; flex-direction: column; gap: 8px; }
+
+.analytics__alert-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+
+.analytics__alert-text { font-size: 13px; line-height: 1.5; }
+
+.analytics__tips { display: flex; flex-direction: column; gap: 8px; }
+
+.analytics__tip-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.analytics__tip-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+/* Large gauge */
+.analytics__gauge-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-r);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.analytics__gauge-title  { font-size: 14px; font-weight: 600; }
+
+.analytics__gauge-wrap   { position: relative; margin-top: 8px; }
+
+.analytics__gauge-center {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* Score number — plain body font */
+.analytics__gauge-score {
+  font-family: var(--font-body);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.analytics__gauge-sub     { font-size: 13px; color: var(--text3); margin-top: 3px; }
+
+.analytics__gauge-legend  { display: flex; gap: 24px; margin-top: 8px; }
+
+.analytics__gauge-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+
+.analytics__gauge-dot   { width: 8px; height: 8px; border-radius: 2px; background: var(--chart-active); flex-shrink: 0; }
+.analytics__gauge-label { color: var(--text2); }
+.analytics__gauge-range { color: var(--text3); font-size: 12px; }
+
+.analytics__gauge-message { font-size: 14px; color: var(--text2); margin-top: 4px; text-align: center; }

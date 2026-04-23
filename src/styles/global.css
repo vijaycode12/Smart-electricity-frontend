@@ -1,0 +1,175 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  Font stack — plain system fonts, nothing decorative.
+  Georgia for headings (already on every device, feels editorial without being AI-ish).
+  System sans-serif stack for body — same font your OS uses everywhere.
+*/
+:root {
+  --font-head: Georgia, 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+/* ── Homepage / default theme (no data-theme set) ── */
+:root {
+  --bg:      #ffffff;
+  --bg2:     #f5f5f5;
+  --bg3:     #eeeeee;
+  --bg4:     #e0e0e0;
+  --bg5:     #cccccc;
+
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --border3: rgba(0,0,0,0.24);
+
+  --accent:    #111111;
+  --accent2:   #333333;
+  --accent3:   #555555;
+  --accent4:   #888888;
+
+  /* Chart color — visible in both themes. A mid steel-blue works on white and dark. */
+  --chart-active:   #4a7fa5;
+  --chart-inactive: #c8c8c8;
+
+  --text:    #111111;
+  --text2:   #555555;
+  --text3:   #999999;
+
+  --danger:  #cc0000;
+  --card-r:  10px;
+
+  --shadow:    0 2px 12px rgba(0,0,0,0.07);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --bg:      #0f0f0f;
+  --bg2:     #1a1a1a;
+  --bg3:     #222222;
+  --bg4:     #2c2c2c;
+  --bg5:     #383838;
+
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --border3: rgba(255,255,255,0.20);
+
+  --accent:  #e8e8e8;
+  --accent2: #bbbbbb;
+  --accent3: #888888;
+  --accent4: #666666;
+
+  /* Chart in dark — use the same blue so bars are visible against black */
+  --chart-active:   #4a7fa5;
+  --chart-inactive: #3a3a3a;
+
+  --text:    #eeeeee;
+  --text2:   #aaaaaa;
+  --text3:   #555555;
+
+  --danger:  #ff4444;
+  --shadow:    0 4px 20px rgba(0,0,0,0.5);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ── Light theme (app interior) ── */
+[data-theme="light"] {
+  --bg:      #ffffff;
+  --bg2:     #ffffff;
+  --bg3:     #f7f7f7;
+  --bg4:     #ebebeb;
+  --bg5:     #d8d8d8;
+
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.13);
+  --border3: rgba(0,0,0,0.22);
+
+  --accent:  #111111;
+  --accent2: #333333;
+  --accent3: #666666;
+  --accent4: #999999;
+
+  --chart-active:   #4a7fa5;
+  --chart-inactive: #d8d8d8;
+
+  --text:    #111111;
+  --text2:   #555555;
+  --text3:   #999999;
+
+  --danger:  #cc0000;
+  --shadow:    0 2px 12px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.04);
+}
+
+/* ── Base ── */
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+
+h1, h2, h3, h4 {
+  font-family: Georgia, serif;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* Numbers — use the same body font, no monospace for normal numbers */
+.num {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+input, select, textarea {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+input::placeholder, textarea::placeholder { color: var(--text3); }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4); }
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 500;
+  border: none;
+  transition: all 0.15s;
+}
+label { font-family: var(--font-body); }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 4px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes pulse   { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.fade-up { animation: fadeUp  0.3s ease forwards; }
+.fade-in { animation: fadeIn  0.2s ease forwards; }
+.spin    { animation: spin    0.8s linear infinite; }
+.pulse   { animation: pulse   1.5s ease infinite; }
