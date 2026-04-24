@@ -1,71 +1,40 @@
-// ── API helper ───────────────────────────────────────────────────
-// All network requests go through this file.
-// It handles: auth headers, error parsing, and JSON responses.
+const BASE_URL = 'https://watttrack-backend.onrender.com'
 
-// Base URL for all API calls — change this to your backend address
-const BASE_URL = 'https://watttrack-backend.onrender.com/'
+const getToken = () => localStorage.getItem('token')
 
-// Get the saved auth token from localStorage
-//const getToken = () => localStorage.getItem('token')
+const buildHeaders = () => ({
+  'Content-Type': 'application/json',
+  ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
+})
 
-// Build headers for authenticated requests
-// const buildHeaders = () => ({
-//   'Content-Type': 'application/json',
-//   // Only add Authorization header if a token exists
-//   ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
-// })
-
-// ── Core request function ────────────────────────────────────────
-// Used internally by api.get, api.post, etc.
 const request = async (url, options = {}) => {
   try {
-    const response = await fetch(`${BASE_URL}${url}`, {
+    const response = await fetch(`${BASE_URL}/${url}`, {
       ...options,
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: buildHeaders(),
     })
 
-    // If the server returned an error status (4xx, 5xx)
     if (!response.ok) {
       const text = await response.text()
       console.error(`API error [${options.method || 'GET'}] ${url}:`, response.status, text)
       return { success: false, error: `${response.status} ${response.statusText}` }
     }
 
-    // Parse and return the JSON response
     return response.json()
-
   } catch (err) {
-    // Network-level error (no internet, server down, etc.)
     console.error(`Network error [${options.method || 'GET'}] ${url}:`, err.message)
     throw err
   }
 }
 
-// ── Public API methods ───────────────────────────────────────────
 export const api = {
-  // GET request — fetches data from the server
-  get: (url) => request(url),
-
-  // POST request — sends data to create something
-  post: (url, body) => request(url, {
+  get:    (url)       => request(url),
+  post:   (url, body) => request(url, { method: 'POST',   body: JSON.stringify(body) }),
+  put:    (url, body) => request(url, { method: 'PUT',    body: JSON.stringify(body) }),
+  delete: (url)       => request(url, { method: 'DELETE' }),
+  upload: (url, formData) => fetch(`${BASE_URL}/${url}`, {
     method: 'POST',
-    body: JSON.stringify(body),
-  }),
-
-  // PUT request — sends data to update something
-  put: (url, body) => request(url, {
-    method: 'PUT',
-    body: JSON.stringify(body),
-  }),
-
-  // DELETE request — removes something from the server
-  delete: (url) => request(url, { method: 'DELETE' }),
-
-  // File upload — uses FormData instead of JSON
-  upload: (url, formData) => fetch(`${BASE_URL}${url}`, {
-    method: 'POST',
-    credentials: 'include',
-    body: formData, // no JSON stringify — FormData handles the encoding
+    headers: { Authorization: `Bearer ${getToken()}` },
+    body: formData,
   }).then(r => r.json()),
 }

@@ -13,6 +13,8 @@ const F = ({ label, children }) => (
   <div className="form-field"><label>{label}</label>{children}</div>
 )
 
+const { user, login, logout, checked } = useAuth();
+
 const TABS = [
   { id: 'overview', label: 'Overview'     },
   { id: 'edit',     label: 'Edit Profile' },
@@ -321,8 +323,8 @@ const ProfilePage = () => {
               <div className="profile__form-card-title">Sign out</div>
               <div className="profile__form-card-sub">Sign out of your WattTrack account</div>
             </div>
-            <Btn variant="danger" onClick={async () => { await api.post('/auth/sign-out', {}); localStorage.removeItem('token'); window.location.reload() }}>
-              <Icon name="logout" size={14} /> Sign Out
+            <Btn variant="danger" onClick={logout}>
+                    <Icon name="logout" size={14} /> Sign Out
             </Btn>
           </div>
         </div>
