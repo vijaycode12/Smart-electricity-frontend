@@ -13,8 +13,6 @@ const F = ({ label, children }) => (
   <div className="form-field"><label>{label}</label>{children}</div>
 )
 
-const { user, login, logout, checked } = useAuth();
-
 const TABS = [
   { id: 'overview', label: 'Overview'     },
   { id: 'edit',     label: 'Edit Profile' },
@@ -24,10 +22,10 @@ const TABS = [
 
 // ── ProfilePage ───────────────────────────────────────────────────
 const ProfilePage = () => {
-  const { user, login }        = useAuth()
-  const toast                  = useToast()
-  const { theme, toggleTheme } = useTheme()
-  const isDark                 = theme === 'dark'
+  const { user, login, logout } = useAuth()   // ✅ inside component, with logout
+  const toast                   = useToast()
+  const { theme, toggleTheme }  = useTheme()
+  const isDark                  = theme === 'dark'
 
   const [stats, setStats]               = useState(null)
   const [loadingStats, setLoadingStats] = useState(true)
@@ -77,7 +75,7 @@ const ProfilePage = () => {
   const saveProfile = async () => {
     if (!profile.username || !profile.email) return toast('All fields required', 'error')
     setSavingProfile(true)
-    const res = await api.put('/auth/profile', profile)
+    const res = await api.put('api/v1/auth/profile', profile)
     if (res.success) {
       toast('Profile updated!')
       login({ ...user, username: profile.username, email: profile.email }, localStorage.getItem('token'))
@@ -91,13 +89,11 @@ const ProfilePage = () => {
     if (pass.newPassword !== pass.confirmPassword)   return toast('Passwords do not match', 'error')
     if (pass.newPassword.length < 6)                 return toast('Min 6 characters', 'error')
     setSavingPass(true)
-    const res = await api.put('/auth/profile', { currentPassword: pass.currentPassword, newPassword: pass.newPassword })
+    const res = await api.put('api/v1/auth/profile', { currentPassword: pass.currentPassword, newPassword: pass.newPassword })
     if (res.success) { toast('Password changed!'); setPass({ currentPassword: '', newPassword: '', confirmPassword: '' }) }
     else toast(res.message || 'Failed', 'error')
     setSavingPass(false)
   }
-
-  const strengthColor = (score) => score >= 90 ? 'var(--text)' : score >= 70 ? 'var(--text2)' : 'var(--danger)'
 
   return (
     <div className="profile">
@@ -240,7 +236,6 @@ const ProfilePage = () => {
               <div className="profile__form-card-sub">Update your username and email address</div>
             </div>
             <div className="profile__form-card-body">
-              {/* Avatar preview */}
               <div className="profile__avatar-preview">
                 <div className="profile__preview-avatar">
                   {(profile.username?.[0] || user?.username?.[0] || 'U').toUpperCase()}
@@ -324,7 +319,7 @@ const ProfilePage = () => {
               <div className="profile__form-card-sub">Sign out of your WattTrack account</div>
             </div>
             <Btn variant="danger" onClick={logout}>
-                    <Icon name="logout" size={14} /> Sign Out
+              <Icon name="logout" size={14} /> Sign Out
             </Btn>
           </div>
         </div>
