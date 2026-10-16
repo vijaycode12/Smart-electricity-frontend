@@ -8,7 +8,6 @@ Bills can be **uploaded as an image or PDF** — the server reads them with **Te
 - **Backend:** Node.js, Express and MongoDB (Mongoose), JWT auth, Multer + Tesseract.js OCR, Arcjet
 
 **Live app:** https://watttrack-five.vercel.app
-**Live API:** https://watttrack-backend.onrender.com
 
 | Part | Repository |
 | --- | --- |
